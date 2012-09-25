@@ -1,0 +1,69 @@
+class @BlogAppCtrl
+  constructor: (@$route, @$xhr, @$location, @$log) ->
+    @setupXhr()
+    @initRoutes()
+
+  # routes handling
+  initRoutes:(routes)->
+
+    @$route.when '/posts',
+        template: '<%= asset_path("posts.html") %>',
+        controller: PostListCtrl
+
+    @$route.when '/posts/new',
+        template: '<%= asset_path("new.html") %>'
+        controller: CreatePostCtrl
+
+    @$route.otherwise redirectTo: '/posts'
+
+    @$route.parent @
+
+  setupXhr:->
+    @$xhr.defaults.headers.post['Content-Type'] = 'application/json'
+    @$xhr.defaults.headers.put['Content-Type'] = 'application/json'
+
+    if token = $("meta[name='csrf-token']").attr("content")
+      @$xhr.defaults.headers.post['X-CSRF-Token'] = token
+      @$xhr.defaults.headers.put['X-CSRF-Token'] = token
+      @$xhr.defaults.headers['delete']['X-CSRF-Token'] = token
+
+  getCurrentParams:->
+    @$route.current.params
+
+BlogAppCtrl.$inject = ['$route', '$xhr', '$location', '$log']
+
+class @AbstractPostCtrl
+  browseToOverview:->
+    @$location.path 'posts'
+
+  browseToNew:->
+    @$location.path 'posts/new'
+
+  browseToEdit:->
+    @$location.path 'posts/' + @newPost.id + '/edit'
+
+
+class @PostListCtrl extends @AbstractPostCtrl
+  constructor: (@PostsService) ->
+    @posts = @PostsService.query()
+
+PostListCtrl.$inject = ['PostsService']
+
+class @CreatePostCtrl extends @AbstractPostCtrl
+  constructor: (@PostsService) ->
+    @newPost = new @PostsService()
+
+  submit:->
+    @save()
+
+  save: ->
+    @newPost.$save(post: @newPost, @saveResultHandler, @saveErrorHandler)
+
+  saveResultHandler:->
+    @browseToOverview()
+
+  saveErrorHandler:(error)->
+    alert "Error trying to save a new post (error: " + error + ")"
+
+CreatePostCtrl.$inject = ['PostsService']
+

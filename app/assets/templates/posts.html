@@ -1,0 +1,17 @@
+<ul id="sub-nav">
+  <li><a id="bAdd" class="subButton" ng:click="browseToNew()">Create</a></li>
+  <li><a id="bEdit" class="subButton" ng:click="browseToEdit()">Edit</a></li>
+  <li><a id="bDelete" class="subButton" ng:click="delete()">Delete</a></li>
+</ul>
+
+<div id="post-list-container">
+  <ul id="post-list">
+    <li ng:repeat="post in posts"
+      ng:click="select(post)"
+      ng:dblclick="browseToEdit()"
+      ng:class="post == selectedPost && 'active'">
+      <b>{{post.title}}:</b> {{post.content}}
+    </li>
+  </ul>
+</div>
+

@@ -1,0 +1,25 @@
+development:
+  sessions:
+    default:
+      database: blog_dev
+      hosts:
+        - localhost:27017
+      options:
+        consistency: :strong
+test:
+  sessions:
+    default:
+      database: blog_test
+      hosts:
+        - localhost:27017
+      options:
+        consistency: :strong
+
+production:
+  sessions:
+    default:
+      host: <%= ENV['MONGOID_HOST'] %>
+      port: <%= ENV['MONGOID_PORT'] %>
+      username: <%= ENV['MONGOID_USERNAME'] %>
+      password: <%= ENV['MONGOID_PASSWORD'] %>
+      database: <%= ENV['MONGOID_DATABASE'] %>

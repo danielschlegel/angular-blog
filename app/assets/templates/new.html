@@ -1,0 +1,16 @@
+<form name="postForm" ng:submit="submit()">
+  <fieldset>
+     <label>
+      <span>Title</span>
+      <input type="text" ng:model="newPost.title" required autofocus/>
+    </label>
+
+    <label>
+      <span>Content</span>
+      <input type="text" ng:model="newPost.content" required autofocus/>
+    </label>
+
+    <button type="submit" class="main-button">Add</button>
+
+</fieldset>
+</form>
