@@ -1,4 +1,4 @@
-AngBlog2::Application.routes.draw do
+AngBlog::Application.routes.draw do
   resources :posts
   root :to => 'posts#index'
 end
