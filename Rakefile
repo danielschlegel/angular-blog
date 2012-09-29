@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-AngBlog2::Application.load_tasks
+AngBlog::Application.load_tasks
