@@ -253,7 +253,6 @@ DEPENDENCIES
   execjs
   factory_girl_rails
   growl
-  guard
   guard-bundler
   guard-livereload
   guard-rspec
